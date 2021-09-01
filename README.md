@@ -4,7 +4,7 @@
 
 Esse repositório está sendo desenvolvido durante o bootcamp na Compasso Uol.
 A finalidade desse repositório, é para criar um app para monitorar a distancia percorrida nas caminhadas e corridas dos usuario e o
-tempo que foi gasto para realizar as atividades fisicas, salvar esas informações e assim poder mostrar
+tempo que foi gasto para realizar as atividades fisicas, salvar essas informações e assim poder mostrar
 ao usuario a sua evolução!
 
 
