@@ -2,17 +2,13 @@
 
 # Seja bem vindo(a) ao Corrida Leve!
 
-Esse repositório está sendo desenvolvido durante o bootcamp na Compasso Uol.
-A finalidade desse repositório, é criar um app para monitorar a distancia percorrida nas caminhadas e corridas dos usuario e o
-tempo que foi gasto para realizar as atividades fisicas, salvar essas informações e assim poder mostrar
-ao usuario a sua evolução!
-
+Esse repositório está sendo desenvolvido durante o bootcamp na Compasso Uol. A finalidade desse repositório, é criar um app para monitorar a distância percorrida nas caminhadas e corridas do usuário e o tempo que foi gasto para realizar as atividades físicas, salvar essas informações e assim poder mostrar os dados da sua corrida/caminhada!
 
 ## Objetivos
 
-- Pedir permissao de localização para o usuario.
-- Enviar as coordenadas constantemente num curto periodo de tempo 
-- Utilizar arquitetura MVVM para organização do projeto
+- Pedir permissão de localização para o usuário.
+- Enviar as coordenadas constantemente num curto período de tempo.
+- Utilizar arquitetura MVVM para organização do projeto.
 
 ## Extras
-- Utilizar o FireBase ao invés de usar o SharedPreference
+- Utilizar o FireBase ao invés de usar o SharedPreference.
