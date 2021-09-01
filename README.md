@@ -11,4 +11,5 @@ Esse repositório está sendo desenvolvido durante o bootcamp na Compasso Uol. A
 - Utilizar arquitetura MVVM para organização do projeto.
 
 ## Extras
-- Utilizar o FireBase ao invés de usar o SharedPreference.
+- Login utilizando FireBase Auth.
+- Salvar dados dos exercícios no FireBase Realtime DataBase.
