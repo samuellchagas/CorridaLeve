@@ -8,8 +8,11 @@ tempo que foi gasto para realizar as atividades fisicas, salvar esas informaçõ
 ao usuario a sua evolução!
 
 
-## OBJETIVOS
+## Objetivos
 
 - Pedir permissao de localização para o usuario.
 - Enviar as coordenadas constantemente num curto periodo de tempo 
 - Utilizar arquitetura MVVM para organização do projeto
+
+## Extras
+- Utilizar o FireBase ao invés de usar o SharedPreference
