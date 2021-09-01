@@ -7,7 +7,7 @@ Esse repositório está sendo desenvolvido durante o bootcamp na Compasso Uol. A
 ## Objetivos
 
 - Pedir permissão de localização para o usuário.
-- Enviar as coordenadas constantemente num curto período de tempo.
+- Enviar as coordenadas constantemente para conseguir uma maior precisão do trajeto feito.
 - Utilizar arquitetura MVVM para organização do projeto.
 
 ## Extras
