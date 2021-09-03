@@ -34,15 +34,17 @@
         android:id="@+id/login_username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:hint="Usuário"
         android:inputType="textEmailAddress"
         app:boxStrokeColor="@color/grayCorridaLeve"
+        app:hintTextColor="@color/grayCorridaLeve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:startIconTint="@color/grayCorridaLeve">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email"
@@ -64,9 +66,11 @@
         android:inputType="textEmailAddress"
         app:boxStrokeColor="@color/grayCorridaLeve"
         app:endIconMode="password_toggle"
+        app:hintTextColor="@color/grayCorridaLeve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_username_layout">
+        app:layout_constraintTop_toBottomOf="@id/login_username_layout"
+        app:startIconTint="@color/grayCorridaLeve">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password"
@@ -92,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/login_input_layout" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switch_save_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
