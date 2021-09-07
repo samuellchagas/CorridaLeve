@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.corridaleve.databinding.HomeFragmentBinding
 import com.example.corridaleve.databinding.RegisterFragmentBinding
 import com.example.corridaleve.viewmodel.RegisterViewModel
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment:Fragment() {
@@ -42,6 +43,11 @@ class RegisterFragment:Fragment() {
         }
 
         viewModel.validUserLiveData.observe(viewLifecycleOwner,{
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(it.email,it.password).addOnCompleteListener {
+                if(it.isSuccessful){
+                    Toast.makeText(requireContext(),"Cadastro efetuado com Sucesso!",Toast.LENGTH_LONG).show()
+                }
+            }
 
         })
 
