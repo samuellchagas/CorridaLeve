@@ -82,7 +82,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/button"
+        android:id="@+id/btn_confirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -120,10 +120,10 @@
         android:layout_marginTop="28dp"
         android:text="Ainda não tem cadastro? Então clique aqui e comece a correr mais leve! 🏃‍♂️🏃‍♀️"
         android:textColor="@color/orangeCorridaLeve"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/btn_confirm"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="@+id/btn_confirm"
+        app:layout_constraintTop_toBottomOf="@+id/btn_confirm" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

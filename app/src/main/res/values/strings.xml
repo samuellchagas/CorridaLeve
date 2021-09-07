@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">CorridaLeve</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="cadastrar">Cadastar novo usuário</string>
+    <string name="entrar">Entar com cadastro existente</string>
+    <string name="cad_cadastrar">Cadastrar</string>
+    <string name="cad_cancel">Cancelar</string>
+    <string name="cad_entar">Entrar</string>
+    <string name="nome">Nome:</string>
+    <string name="email">E-Mail:</string>
+    <string name="senha">Senha:</string>
+    <string name="confsenha">Confirmar Senha:</string>
+    <string name="modificar">Modificar</string>
+
 </resources>

@@ -29,16 +29,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.switchSaveLogin.setOnCheckedChangeListener { _, isCheck ->
-
-            if (isCheck) {
-                viewModel.saveLogin(
-                    binding.loginEmail.text.toString(),
-                    binding.loginPassword.text.toString()
-                )
-            }
-        }
-
         viewModel.getEmail()
 
         viewModel.emailLiveData.observe(viewLifecycleOwner,{
@@ -51,7 +41,29 @@ class LoginFragment : Fragment() {
             binding.loginPassword.setText(it)
         })
 
-        binding.button.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_homeFragment) }
+        viewModel.switchDefault()
+
+        viewModel.switchDefaultLiveData.observe(viewLifecycleOwner,{
+            if(it){
+                binding.switchSaveLogin.toggle()
+            }
+        })
+
+        binding.switchSaveLogin.setOnCheckedChangeListener { _, isCheck ->
+
+            if (isCheck) {
+                viewModel.saveLogin(
+                    binding.loginEmail.text.toString(),
+                    binding.loginPassword.text.toString()
+                )
+            }else{
+                viewModel.deleteLogin()
+            }
+        }
+
+        binding.btnConfirm.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_homeFragment) }
+
+        binding.textView3.setOnClickListener{findNavController().navigate(R.id.action_loginFragment_to_registerFragment)}
 
     }
 

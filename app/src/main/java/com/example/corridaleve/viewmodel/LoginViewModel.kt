@@ -13,6 +13,9 @@ class LoginViewModel(private val loginRepository: LoginRepository):ViewModel() {
     private val _passwordLiveData = MutableLiveData<String>()
     val passwordLiveData: LiveData<String> = _passwordLiveData
 
+    private val _switchDefaultLiveData = MutableLiveData<Boolean>()
+    val switchDefaultLiveData:LiveData<Boolean> = _switchDefaultLiveData
+
     private val _rememberLogin = MutableLiveData<Unit>()
     val rememberLogin:LiveData<Unit> = _rememberLogin
 
@@ -36,6 +39,19 @@ class LoginViewModel(private val loginRepository: LoginRepository):ViewModel() {
 
     fun saveLogin(email:String, password:String){
         loginRepository.saveLogin(email,password)
+    }
+
+    fun deleteLogin(){
+        loginRepository.deleteLogin()
+    }
+
+    fun switchDefault() {
+        if((loginRepository.getEmail().isNotEmpty())&&(loginRepository.getPassword().isNotEmpty())){
+            _switchDefaultLiveData.postValue(true)
+        }
+        else{
+            _switchDefaultLiveData.postValue(false)
+        }
     }
 
 
