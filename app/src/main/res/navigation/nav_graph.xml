@@ -30,10 +30,35 @@
         android:id="@+id/homeFragment"
         android:name="com.example.corridaleve.fragments.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_screenRunFragment"
+            app:destination="@id/screenRunFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_historicFragment"
+            app:destination="@id/historicFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.corridaleve.fragments.RegisterFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/register_fragment"/>
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/screenRunFragment"
+        android:name="com.example.corridaleve.fragments.ScreenRunFragment"
+        android:label="ScreenRunFragment"
+        tools:layout="@layout/screen_run_fragment">
+        <action
+            android:id="@+id/action_screenRunFragment_to_historicFragment"
+            app:destination="@id/historicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historicFragment"
+        android:name="com.example.corridaleve.fragments.HistoricFragment"
+        android:label="HistoricFragment"
+        tools:layout="@layout/historic_fragment"/>
 </navigation>
