@@ -1,10 +1,11 @@
-package com.example.corridaleve
+package com.example.corridaleve.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.corridaleve.R
 import com.example.corridaleve.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {

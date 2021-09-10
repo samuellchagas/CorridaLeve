@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/run_nav_graph"
+    app:startDestination="@id/screenRunFragment2">
+    <fragment
+        android:id="@+id/screenRunFragment2"
+        android:name="com.example.corridaleve.fragments.ScreenRunFragment"
+        android:label="ScreenRunFragment"
+        tools:layout="@layout/screen_run_fragment"/>
+</navigation>

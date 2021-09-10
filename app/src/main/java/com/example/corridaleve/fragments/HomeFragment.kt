@@ -10,7 +10,7 @@ import com.example.corridaleve.R
 import com.example.corridaleve.databinding.HomeFragmentBinding
 import com.example.corridaleve.databinding.LoginFragmentBinding
 
-class HomeFragment:Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: HomeFragmentBinding? = null
     private val binding: HomeFragmentBinding get() = _binding!!
@@ -20,14 +20,17 @@ class HomeFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding= HomeFragmentBinding.inflate(inflater,container,false)
+        _binding = HomeFragmentBinding.inflate(inflater, container, false)
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.imageViewStart.setOnClickListener{findNavController().navigate(R.id.action_homeFragment_to_screenRunFragment)}
 
+        binding.imageViewStart.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_screenRunActivity)
+        }
     }
+
 }

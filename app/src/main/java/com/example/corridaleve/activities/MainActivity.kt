@@ -1,4 +1,4 @@
-package com.example.corridaleve
+package com.example.corridaleve.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -53,6 +53,8 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()){task ->
                 if(task.isSuccessful){
                     findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                    requireActivity().finish()
+
                 }else{
                     Toast.makeText(requireContext(),"Usuario e/ou senha inválida!",Toast.LENGTH_LONG).show()
                 }
