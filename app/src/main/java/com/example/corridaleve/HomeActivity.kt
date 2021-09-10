@@ -2,6 +2,7 @@ package com.example.corridaleve
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.corridaleve.databinding.ActivityHomeBinding
@@ -20,6 +21,13 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
+    override fun onBackPressed() {
 
+    AlertDialog.Builder(this).setTitle("Sair do aplicativo?")
+        .setMessage("").setPositiveButton("SIM"){_,_->
+        finish()
+    }.setNegativeButton("NÃO"){_,_->}.show()
+
+    }
 
 }
