@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.corridaleve.R
 import com.example.corridaleve.databinding.HomeFragmentBinding
 import com.example.corridaleve.databinding.LoginFragmentBinding
 
@@ -25,6 +27,7 @@ class HomeFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imageViewStart.setOnClickListener{findNavController().navigate(R.id.action_homeFragment_to_screenRunFragment)}
 
     }
 }

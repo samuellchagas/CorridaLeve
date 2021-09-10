@@ -7,7 +7,7 @@
     android:background="@color/grayCorridaLeve">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView_stop"
         android:layout_width="176dp"
         android:layout_height="172dp"
         android:layout_marginBottom="100dp"

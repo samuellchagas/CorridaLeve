@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.corridaleve.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -38,7 +39,8 @@ class MapsFragment : Fragment() {
         val sydney = LatLng(-34.0, 151.0)
         val teste = LatLng(latitude.toDouble(),longitude.toDouble())
         googleMap.addMarker(MarkerOptions().position(teste).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(teste))
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(teste))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(teste,12f))
 
     }
 
@@ -53,16 +55,11 @@ class MapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-//        mapFragment?.getMapAsync(callback)
 
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
          locationUser(mapFragment)
-    }
-
-    private fun getLocation(latitude:String, longitude:String){
-
     }
 
     private fun locationUser(mapFragment: SupportMapFragment?) {

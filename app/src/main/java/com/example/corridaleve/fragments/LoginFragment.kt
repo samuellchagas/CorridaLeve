@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
             val password = binding.loginPassword.text.toString()
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()){task ->
                 if(task.isSuccessful){
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
                 }else{
                     Toast.makeText(requireContext(),"Usuario e/ou senha inválida!",Toast.LENGTH_LONG).show()
                 }
