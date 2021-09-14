@@ -64,19 +64,7 @@ class MapsFragment : Fragment() {
 
     private fun locationUser(mapFragment: SupportMapFragment?) {
 
-        val task = fusedLocationProviderClient.lastLocation
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                (requireContext()),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
-            return
-        }
+        var task = fusedLocationProviderClient.lastLocation
         task.addOnSuccessListener {
             if(it!=null){
                 Toast.makeText(requireContext(),"${it.latitude} ${it.longitude}",Toast.LENGTH_LONG).show()
