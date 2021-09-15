@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.corridaleve.R
@@ -36,7 +37,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requestPermission()
+        requestPermissionMaps()
 
         viewModel.getEmail()
 
@@ -53,50 +54,54 @@ class LoginFragment : Fragment() {
         viewModel.switchDefault()
 
         binding.btnConfirm.setOnClickListener {
-            val email = binding.loginEmail.text.toString()
-            val password = binding.loginPassword.text.toString()
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Email ou senha inválida", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(requireActivity()) { task ->
-                        if (task.isSuccessful) {
-                            findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
-                            requireActivity().finish()
-
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Usuario e/ou senha inválida!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-            }
+            passarParaViewModelERepository()
         }
 
         viewModel.switchDefaultLiveData.observe(viewLifecycleOwner, {
             binding.switchSaveLogin.toggle()
         })
 
-        binding.switchSaveLogin.setOnCheckedChangeListener { _, isCheck ->
+        binding.loginEmail.addTextChangedListener {
+            viewModel.changeEmail(it.toString())
+        }
 
-            if (isCheck) {
-                viewModel.saveLogin(
-                    binding.loginEmail.text.toString(),
-                    binding.loginPassword.text.toString()
-                )
-            } else {
-                viewModel.deleteLogin()
-            }
+        binding.loginPassword.addTextChangedListener{
+            viewModel.changePassword(it.toString())
+        }
+
+        binding.switchSaveLogin.setOnCheckedChangeListener { _, isCheck ->
+            viewModel.remeberChecked(isCheck)
         }
 
         binding.textView3.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_registerFragment) }
 
     }
 
-    private fun requestPermission() {
+    private fun passarParaViewModelERepository() {
+        val email = binding.loginEmail.text.toString()
+        val password = binding.loginPassword.text.toString()
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireContext(), "Email ou senha inválida", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                        requireActivity().finish()
+
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Usuario e/ou senha inválida!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+        }
+    }
+
+    private fun requestPermissionMaps() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -112,6 +117,5 @@ class LoginFragment : Fragment() {
             )
         }
     }
-
 
 }

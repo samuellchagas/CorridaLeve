@@ -1,5 +1,6 @@
 package com.example.corridaleve.fragments
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -24,10 +25,7 @@ class ScreenRunFragment : Fragment() {
     private var _binding: ScreenRunFragmentBinding? = null
     private val binding: ScreenRunFragmentBinding get() = _binding!!
     private val viewModel: ScreenRunViewModel by viewModel()
-
     private val listCoordinate: MutableList<Location> = mutableListOf()
-
-
     val time: Long = 1000000000L
     var timer = Timer(time)
 
@@ -48,41 +46,79 @@ class ScreenRunFragment : Fragment() {
 
         timer.start()
 
-        var locationManager: LocationManager =
-            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         binding.imageViewStop.setOnClickListener {
             timer.cancel()
-            val timing: Long = 1000000000 - timer.millisUntilFinished
-
             viewModel.saveHistoric(
                 Historic(
                     formatDistance(distanceRun(listCoordinate)),
-                    formatTime(timing),
-                    formatTime(timing)
+                    formatTime((1000000000 - timer.millisUntilFinished)),
+                    formatTime((1000000000 - timer.millisUntilFinished))
+                    //calcPace(distanceRun(listCoordinate),timing)))
                 )
             )
-
-            //calcPace(distanceRun(listCoordinate),timing)))
-
             requireActivity().finish()
+        }
+
+        requestPermissionMapAndLocationLister()
+
+    }
+
+    private fun formatDistance(distance: String): String = String.format("%.2f", distance.toDouble())
+
+    private fun calcPace(distance: String, time: Long): String =
+        ((distance.toFloat() / time) / 60).toString()
+
+
+    inner class Timer(miliis: Long) : CountDownTimer(miliis, 1) {
+        var millisUntilFinished: Long = 0
+        override fun onFinish() {
 
         }
 
+        override fun onTick(millisUntilFinished: Long) {
+            this.millisUntilFinished = millisUntilFinished
+            binding.timeText.text = formatTime((time - millisUntilFinished))
+        }
+    }
+
+    fun formatTime(passTime: Long): String {
+        val f = DecimalFormat("00")
+        val hour = passTime / 3600000 % 24
+        val min = passTime / 60000 % 60
+        val sec = passTime / 1000 % 60
+
+        return f.format(hour) + ":" + f.format(min) + ":" + f.format(sec)
+    }
+
+    fun distanceRun(list: MutableList<Location>): String {
+        var distanceCalculated = 0.0F;
+
+        list.forEachIndexed { index, location ->
+            if (index <= (list.size - 2)) {
+                distanceCalculated += location.distanceTo(list[index + 1])
+            }
+        }
+
+        return distanceCalculated.toString()
+    }
+
+    private fun requestPermissionMapAndLocationLister() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 (requireContext()),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 101
             )
         }
+        val locationManager: LocationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
             1000,
@@ -93,53 +129,5 @@ class ScreenRunFragment : Fragment() {
                 }
             }
         )
-    }
-
-    private fun formatDistance(distance: String): String = String.format("%.2f", distance.toDouble())
-
-    private fun calcPace(distance: String, time: Long): String {
-        return ((distance.toFloat() / time) / 60).toString()
-    }
-
-    inner class Timer(miliis: Long) : CountDownTimer(miliis, 1) {
-        var millisUntilFinished: Long = 0
-        override fun onFinish() {
-
-        }
-
-        override fun onTick(millisUntilFinished: Long) {
-            this.millisUntilFinished = millisUntilFinished
-            val passTime = time - millisUntilFinished
-
-            binding.timeText.text = formatTime(passTime)
-        }
-    }
-
-    fun formatTime(passTime: Long): String {
-
-        val f = DecimalFormat("00")
-        val hour = passTime / 3600000 % 24
-        val min = passTime / 60000 % 60
-        val sec = passTime / 1000 % 60
-
-        return f.format(hour) + ":" + f.format(min) + ":" + f.format(sec)
-    }
-
-    fun distanceRun(list: MutableList<Location>): String {
-
-        var latitude = 0.0
-        var longitude = 0.0
-        var distanceCalculated = 0.0F;
-
-        list.forEachIndexed { index, location ->
-            if (index <= (list.size - 2)) {
-                distanceCalculated += location.distanceTo(list[index + 1])
-            }
-        }
-
-        var distance = latitude.toString() + ", " + longitude.toString()
-        return distanceCalculated.toString()
-
-
     }
 }

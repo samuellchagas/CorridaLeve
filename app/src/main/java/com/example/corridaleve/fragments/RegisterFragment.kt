@@ -41,7 +41,7 @@ class RegisterFragment:Fragment() {
                 binding.registerPassword.text.toString(),
                 binding.confirmPassword.text.toString())
         }
-
+        //passar para repository
         viewModel.validUserLiveData.observe(viewLifecycleOwner,{
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(it.email,it.password).addOnCompleteListener {
                 if(it.isSuccessful){
