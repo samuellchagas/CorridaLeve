@@ -24,8 +24,8 @@ class HistoricAdapter(private val list: List<Historic>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HistoricViewHolder){
-            holder.distancia.text = "Distância: "+list[position].distancia
-            holder.tempo.text ="Tempo: "+ list[position].tempo
+            holder.distancia.text = "Distância: " + list[position].distancia + " M"
+            holder.tempo.text ="Tempo: " + list[position].tempo
             holder.pace.text ="Pace: "+ list[position].pace
         }
     }

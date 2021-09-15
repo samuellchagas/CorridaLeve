@@ -63,13 +63,17 @@ class LoginFragment : Fragment() {
         binding.btnConfirm.setOnClickListener {
             val email = binding.loginEmail.text.toString()
             val password = binding.loginPassword.text.toString()
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()){task ->
-                if(task.isSuccessful){
-                    findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
-                    requireActivity().finish()
+            if(email.isEmpty()||password.isEmpty()){
+                Toast.makeText(requireContext(), "Email ou senha inválida", Toast.LENGTH_SHORT).show()
+            }else{
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()){task ->
+                    if(task.isSuccessful){
+                        findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                        requireActivity().finish()
 
-                }else{
-                    Toast.makeText(requireContext(),"Usuario e/ou senha inválida!",Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(requireContext(),"Usuario e/ou senha inválida!",Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

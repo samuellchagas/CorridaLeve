@@ -8,16 +8,14 @@ import androidx.fragment.app.Fragment
 import com.example.corridaleve.adapter.HistoricAdapter
 import com.example.corridaleve.databinding.HistoricFragmentBinding
 import com.example.corridaleve.model.Historic
+import com.example.corridaleve.viewmodel.HistoricViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoricFragment : Fragment() {
 
     private var _binding: HistoricFragmentBinding? = null
     private val binding: HistoricFragmentBinding get() = _binding!!
-    private val listExemplo: List<Historic> = listOf(
-        Historic("13,2", "1:00:13", "4,13"),
-        Historic("13,2", "1:00:13", "4,13"),
-        Historic("13,2", "1:00:13", "4,13")
-    );
+    private val viewModel: HistoricViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +29,11 @@ class HistoricFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter = HistoricAdapter(listExemplo)
+        viewModel.requestListHistoric()
+
+        viewModel.listHistoric.observe(viewLifecycleOwner,{
+            binding.recyclerView.adapter = HistoricAdapter(it)
+        })
 
     }
 }

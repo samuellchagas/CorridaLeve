@@ -14,12 +14,16 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.corridaleve.databinding.ScreenRunFragmentBinding
+import com.example.corridaleve.model.Historic
+import com.example.corridaleve.viewmodel.ScreenRunViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
 class ScreenRunFragment : Fragment() {
 
     private var _binding: ScreenRunFragmentBinding? = null
     private val binding: ScreenRunFragmentBinding get() = _binding!!
+    private val viewModel: ScreenRunViewModel by viewModel()
 
     private val listCoordinate: MutableList<Location> = mutableListOf()
 
@@ -51,8 +55,17 @@ class ScreenRunFragment : Fragment() {
             timer.cancel()
             val timing: Long = 1000000000 - timer.millisUntilFinished
 
-            Toast.makeText(requireContext(), distanceRun(listCoordinate), Toast.LENGTH_LONG).show()
-            //requireActivity().finish()
+            viewModel.saveHistoric(
+                Historic(
+                    formatDistance(distanceRun(listCoordinate)),
+                    formatTime(timing),
+                    formatTime(timing)
+                )
+            )
+
+            //calcPace(distanceRun(listCoordinate),timing)))
+
+            requireActivity().finish()
 
         }
 
@@ -72,15 +85,20 @@ class ScreenRunFragment : Fragment() {
         }
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
-            2000,
+            1000,
             0F,
             object : LocationListener {
                 override fun onLocationChanged(p0: Location) {
-
                     listCoordinate.add(p0)
                 }
             }
         )
+    }
+
+    private fun formatDistance(distance: String): String = String.format("%.2f", distance.toDouble())
+
+    private fun calcPace(distance: String, time: Long): String {
+        return ((distance.toFloat() / time) / 60).toString()
     }
 
     inner class Timer(miliis: Long) : CountDownTimer(miliis, 1) {
@@ -114,12 +132,12 @@ class ScreenRunFragment : Fragment() {
         var distanceCalculated = 0.0F;
 
         list.forEachIndexed { index, location ->
-            if(index <= (list.size-2)) {
+            if (index <= (list.size - 2)) {
                 distanceCalculated += location.distanceTo(list[index + 1])
             }
         }
 
-        var distance = latitude.toString() +", "+ longitude.toString()
+        var distance = latitude.toString() + ", " + longitude.toString()
         return distanceCalculated.toString()
 
 
