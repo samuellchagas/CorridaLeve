@@ -1,7 +1,5 @@
 package com.example.corridaleve.fragments
 
-import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -15,22 +13,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.corridaleve.R
 import com.example.corridaleve.databinding.ScreenRunFragmentBinding
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.model.LatLng
 import java.text.DecimalFormat
-import java.util.*
-import java.util.zip.Inflater
 
-class ScreenRunFragment:Fragment() {
+class ScreenRunFragment : Fragment() {
 
     private var _binding: ScreenRunFragmentBinding? = null
-    private val binding:ScreenRunFragmentBinding get() = _binding!!
+    private val binding: ScreenRunFragmentBinding get() = _binding!!
+
+    private val listCoordinate: MutableList<Location> = mutableListOf()
 
 
     val time: Long = 1000000000L
@@ -44,7 +35,7 @@ class ScreenRunFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = ScreenRunFragmentBinding.inflate(inflater,container,false)
+        _binding = ScreenRunFragmentBinding.inflate(inflater, container, false)
         return _binding!!.root
     }
 
@@ -53,13 +44,16 @@ class ScreenRunFragment:Fragment() {
 
         timer.start()
 
-        var locationManager:LocationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var locationManager: LocationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         binding.imageViewStop.setOnClickListener {
             timer.cancel()
             val timing: Long = 1000000000 - timer.millisUntilFinished
-            Toast.makeText(requireContext(), formatTime(timing), Toast.LENGTH_LONG).show()
+
+            Toast.makeText(requireContext(), distanceRun(listCoordinate), Toast.LENGTH_LONG).show()
             //requireActivity().finish()
+
         }
 
         if (ActivityCompat.checkSelfPermission(
@@ -69,25 +63,32 @@ class ScreenRunFragment:Fragment() {
                 (requireContext()),
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
-        ){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
         }
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
-            5000,
+            2000,
             0F,
-            object:LocationListener {
+            object : LocationListener {
                 override fun onLocationChanged(p0: Location) {
-                    Toast.makeText(requireContext(), p0.longitude.toString(), Toast.LENGTH_SHORT).show()
+
+                    listCoordinate.add(p0)
                 }
             }
         )
     }
-    inner class Timer(miliis:Long) : CountDownTimer(miliis,1){
-        var millisUntilFinished:Long = 0
+
+    inner class Timer(miliis: Long) : CountDownTimer(miliis, 1) {
+        var millisUntilFinished: Long = 0
         override fun onFinish() {
 
         }
+
         override fun onTick(millisUntilFinished: Long) {
             this.millisUntilFinished = millisUntilFinished
             val passTime = time - millisUntilFinished
@@ -96,7 +97,7 @@ class ScreenRunFragment:Fragment() {
         }
     }
 
-    fun formatTime (passTime:Long):String{
+    fun formatTime(passTime: Long): String {
 
         val f = DecimalFormat("00")
         val hour = passTime / 3600000 % 24
@@ -106,5 +107,21 @@ class ScreenRunFragment:Fragment() {
         return f.format(hour) + ":" + f.format(min) + ":" + f.format(sec)
     }
 
-}
+    fun distanceRun(list: MutableList<Location>): String {
 
+        var latitude = 0.0
+        var longitude = 0.0
+        var distanceCalculated = 0.0F;
+
+        list.forEachIndexed { index, location ->
+            if(index <= (list.size-2)) {
+                distanceCalculated += location.distanceTo(list[index + 1])
+            }
+        }
+
+        var distance = latitude.toString() +", "+ longitude.toString()
+        return distanceCalculated.toString()
+
+
+    }
+}
