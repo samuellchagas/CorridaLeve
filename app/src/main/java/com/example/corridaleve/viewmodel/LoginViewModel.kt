@@ -29,14 +29,6 @@ class LoginViewModel(private val loginRepository: LoginRepository):ViewModel() {
         _passwordLiveData.postValue(loginRepository.getPassword())
     }
 
-//    fun remeberChecked(isChecked: Boolean){
-//        if(isChecked){
-//            this.onChecked = true
-//        }else{
-//            this.onChecked = false
-//        }
-//    }
-
     fun saveLogin(email:String, password:String){
         loginRepository.saveLogin(email,password)
     }
@@ -49,10 +41,5 @@ class LoginViewModel(private val loginRepository: LoginRepository):ViewModel() {
         if((loginRepository.getEmail().isNotEmpty())&&(loginRepository.getPassword().isNotEmpty())){
             _switchDefaultLiveData.postValue(true)
         }
-        else{
-            _switchDefaultLiveData.postValue(false)
-        }
     }
-
-
 }

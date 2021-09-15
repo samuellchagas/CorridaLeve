@@ -11,5 +11,6 @@
     <string name="senha">Senha:</string>
     <string name="confsenha">Confirmar Senha:</string>
     <string name="modificar">Modificar</string>
+    <string name="exit_app">Sair do aplicativo?</string>
 
 </resources>

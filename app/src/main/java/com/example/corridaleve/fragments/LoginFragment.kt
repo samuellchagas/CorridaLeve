@@ -1,5 +1,6 @@
 package com.example.corridaleve.fragments
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,26 +36,17 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                (requireContext()),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
-        }
+        requestPermission()
 
         viewModel.getEmail()
 
-        viewModel.emailLiveData.observe(viewLifecycleOwner,{
+        viewModel.emailLiveData.observe(viewLifecycleOwner, {
             binding.loginEmail.setText(it)
         })
 
         viewModel.getPassword()
 
-        viewModel.passwordLiveData.observe(viewLifecycleOwner,{
+        viewModel.passwordLiveData.observe(viewLifecycleOwner, {
             binding.loginPassword.setText(it)
         })
 
@@ -63,25 +55,29 @@ class LoginFragment : Fragment() {
         binding.btnConfirm.setOnClickListener {
             val email = binding.loginEmail.text.toString()
             val password = binding.loginPassword.text.toString()
-            if(email.isEmpty()||password.isEmpty()){
-                Toast.makeText(requireContext(), "Email ou senha inválida", Toast.LENGTH_SHORT).show()
-            }else{
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(requireActivity()){task ->
-                    if(task.isSuccessful){
-                        findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
-                        requireActivity().finish()
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "Email ou senha inválida", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                            requireActivity().finish()
 
-                    }else{
-                        Toast.makeText(requireContext(),"Usuario e/ou senha inválida!",Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Usuario e/ou senha inválida!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
-                }
             }
         }
 
-        viewModel.switchDefaultLiveData.observe(viewLifecycleOwner,{
-            if(it){
-                binding.switchSaveLogin.toggle()
-            }
+        viewModel.switchDefaultLiveData.observe(viewLifecycleOwner, {
+            binding.switchSaveLogin.toggle()
         })
 
         binding.switchSaveLogin.setOnCheckedChangeListener { _, isCheck ->
@@ -91,13 +87,30 @@ class LoginFragment : Fragment() {
                     binding.loginEmail.text.toString(),
                     binding.loginPassword.text.toString()
                 )
-            }else{
+            } else {
                 viewModel.deleteLogin()
             }
         }
 
-        binding.textView3.setOnClickListener{findNavController().navigate(R.id.action_loginFragment_to_registerFragment)}
+        binding.textView3.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_registerFragment) }
 
+    }
+
+    private fun requestPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                (requireContext()),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+        }
     }
 
 

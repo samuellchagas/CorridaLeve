@@ -2,7 +2,7 @@ package com.example.corridaleve.repository
 
 import com.example.corridaleve.SharedPreferenceCorrida
 
-class LoginRepository(val sharedPreference: SharedPreferenceCorrida) {
+class LoginRepository(private val sharedPreference: SharedPreferenceCorrida) {
 
     fun saveLogin(email:String, password:String){
         sharedPreference.saveLogin(email,password)

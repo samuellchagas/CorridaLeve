@@ -24,7 +24,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-    AlertDialog.Builder(this).setTitle("Sair do aplicativo?")
+    AlertDialog.Builder(this).setTitle(getString(R.string.exit_app))
         .setMessage("").setPositiveButton("SIM"){_,_->
         finish()
     }.setNegativeButton("NÃO"){_,_->}.show()

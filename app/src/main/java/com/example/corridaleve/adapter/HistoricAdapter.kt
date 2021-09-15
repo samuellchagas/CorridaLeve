@@ -12,9 +12,7 @@ import com.example.corridaleve.model.Historic
 class HistoricAdapter(private val list: List<Historic>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount(): Int = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HistoricViewHolder(
@@ -35,6 +33,4 @@ class HistoricAdapter(private val list: List<Historic>) :
         val tempo: TextView = itemView.findViewById(R.id.text_tempo)
         val pace: TextView = itemView.findViewById(R.id.text_pace)
     }
-
-
 }
