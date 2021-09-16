@@ -13,5 +13,6 @@
     <string name="modificar">Modificar</string>
     <string name="exit_app">Sair do aplicativo?</string>
     <string name="title_map">Voce esta aqui</string>
+    <string name="text_login">Ainda não tem cadastro? Então <i><b>clique aqui</b></i> e comece a correr mais leve! 🏃‍♂️🏃‍♀️</string>
 
 </resources>

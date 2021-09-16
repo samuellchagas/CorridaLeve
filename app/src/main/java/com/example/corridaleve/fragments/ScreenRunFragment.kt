@@ -52,8 +52,8 @@ class ScreenRunFragment : Fragment() {
                 Historic(
                     formatDistance(distanceRun(listCoordinate)),
                     formatTime((1000000000 - timer.millisUntilFinished)),
-                    formatTime((1000000000 - timer.millisUntilFinished))
-                    //calcPace(distanceRun(listCoordinate),timing)))
+                    //formatTime((1000000000 - timer.millisUntilFinished))
+                    calcPace(distanceRun(listCoordinate),timer.millisUntilFinished)
                 )
             )
             requireActivity().finish()
