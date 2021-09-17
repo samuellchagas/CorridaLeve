@@ -8,6 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,9 @@ import com.example.corridaleve.model.Historic
 import com.example.corridaleve.viewmodel.ScreenRunViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.log
 
 class ScreenRunFragment : Fragment() {
 
@@ -29,10 +33,7 @@ class ScreenRunFragment : Fragment() {
     val time: Long = 1000000000L
     var timer = Timer(time)
 
-
-    //private val locationListener:LocationListener()
-
-    override fun onCreateView(
+        override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,23 +51,26 @@ class ScreenRunFragment : Fragment() {
             timer.cancel()
             viewModel.saveHistoric(
                 Historic(
+                    formatDate(Calendar.getInstance()),
                     formatDistance(distanceRun(listCoordinate)),
                     formatTime((1000000000 - timer.millisUntilFinished)),
-                    //formatTime((1000000000 - timer.millisUntilFinished))
-                    calcPace(distanceRun(listCoordinate),timer.millisUntilFinished)
+                    formatDistance( calcPace(distanceRun(listCoordinate),timer.millisUntilFinished))
                 )
             )
             requireActivity().finish()
         }
 
         requestPermissionMapAndLocationLister()
-
     }
+
+
+    fun formatDate(calendar: Calendar): String =
+        SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
 
     private fun formatDistance(distance: String): String = String.format("%.2f", distance.toDouble())
 
     private fun calcPace(distance: String, time: Long): String =
-        ((distance.toFloat() / time) / 60).toString()
+        (((((1000000000 - timer.millisUntilFinished)/ 60) / distance.toFloat()) )).toString()
 
 
     inner class Timer(miliis: Long) : CountDownTimer(miliis, 1) {

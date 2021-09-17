@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Historic(
+    val date:String,
     val distancia: String,
     val tempo: String,
     val pace: String

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.corridaleve.R
 import com.example.corridaleve.model.Historic
+import java.util.*
 
 class HistoricAdapter(private val list: List<Historic>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -22,13 +23,16 @@ class HistoricAdapter(private val list: List<Historic>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HistoricViewHolder){
-            holder.distancia.text = "Distância: " + list[position].distancia + " M"
+
+            holder.date.text = list[position].date
+            holder.distancia.text = "Distância: " + list[position].distancia + " Metros"
             holder.tempo.text ="Tempo: " + list[position].tempo
             holder.pace.text ="Pace: "+ list[position].pace
         }
     }
 
     class HistoricViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val date: TextView = itemView.findViewById(R.id.text_date)
         val distancia: TextView = itemView.findViewById(R.id.text_distancia)
         val tempo: TextView = itemView.findViewById(R.id.text_tempo)
         val pace: TextView = itemView.findViewById(R.id.text_pace)

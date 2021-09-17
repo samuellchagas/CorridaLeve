@@ -10,6 +10,7 @@ import com.example.corridaleve.databinding.HistoricFragmentBinding
 import com.example.corridaleve.model.Historic
 import com.example.corridaleve.viewmodel.HistoricViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class HistoricFragment : Fragment() {
 
